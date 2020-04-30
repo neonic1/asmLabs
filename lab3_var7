@@ -158,8 +158,10 @@ INPUT_ARRAY_SIZE:
     call print_number
     lea dx, input_array_size_str_3
     call print_str     
-    push MIN_ARRAY_SIZE
-    push MAX_ARRAY_SIZE
+    mov dx, MIN_ARRAY_SIZE      
+    push dx
+    mov dx, MAX_ARRAY_SIZE
+    push dx
     call enter_number
     add sp, 4
     cmp di, 2
