@@ -32,13 +32,13 @@ nextMoveUp dw 0
 prevNextMoveUp dw 0   
 nextMoveRight dw 0 
                   
-ballPositionY dw 0 ;счет из верхнего левого угла (0;0)
+ballPositionY dw 0 ;Г±Г·ГҐГІ ГЁГ§ ГўГҐГ°ГµГ­ГҐГЈГ® Г«ГҐГўГ®ГЈГ® ГіГЈГ«Г  (0;0)
 ballPositionX dw 0
 
-ballPrevPositionX dw 1   ;записывать предыдущие значения при изменении текущих
+ballPrevPositionX dw 1
 ballPrevPositionY dw 1  
     
-paddlePosition dw 37 ;счет с левого края (бордюр - -1)
+paddlePosition dw 37 ;Г±Г·ГҐГІ Г± Г«ГҐГўГ®ГЈГ® ГЄГ°Г Гї (ГЎГ®Г°Г¤ГѕГ° - -1)
 paddlePrevPosition dw 0                 
 previousTime dw 0   
 data ENDS
@@ -61,9 +61,9 @@ waitEnterWelcomeScreen:
     jz waitEnterWelcomeScreen
     xor ah, ah
     int 16h
-    cmp ah, 1Ch ;нажат Enter
+    cmp ah, 1Ch
     je initGame
-    cmp ah, 01h ;нажат Esc
+    cmp ah, 01h
     je exitGame
     jmp waitEnterWelcomeScreen    
 initGame:  
@@ -151,7 +151,7 @@ exitGame:
     mov ah, 4Ch
     int 21h
 ;******************PROCEDURES**********************
-;инициализация игровой области    
+;ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї ГЁГЈГ°Г®ГўГ®Г© Г®ГЎГ«Г Г±ГІГЁ    
 initScreen PROC
     mov ah, 00
     mov al, 03
@@ -231,8 +231,8 @@ printComboTitle:
     ret
 initScreen ENDP
 ;**************************************************
-;вывод символа (ax) с атрибутом (bx) на экран (es)
-;место должно быть указано до вызова функции в di
+;ГўГ»ГўГ®Г¤ Г±ГЁГ¬ГўГ®Г«Г  (ax) Г± Г ГІГ°ГЁГЎГіГІГ®Г¬ (bx) Г­Г  ГЅГЄГ°Г Г­ (es)
+;Г¬ГҐГ±ГІГ® Г¤Г®Г«Г¦Г­Г® ГЎГ»ГІГј ГіГЄГ Г§Г Г­Г® Г¤Г® ГўГ»Г§Г®ГўГ  ГґГіГ­ГЄГ¶ГЁГЁ Гў di
 printSymbol PROC
     mov es:[di], ax
     inc di
@@ -241,22 +241,22 @@ printSymbol PROC
     ret
 printSymbol ENDP
 ;************************************************** 
-;выводит на экран число из ax, в место di с атрибутом si
+;ГўГ»ГўГ®Г¤ГЁГІ Г­Г  ГЅГЄГ°Г Г­ Г·ГЁГ±Г«Г® ГЁГ§ ax, Гў Г¬ГҐГ±ГІГ® di Г± Г ГІГ°ГЁГЎГіГІГ®Г¬ si
 printNumber PROC    
     xor cx, cx
     mov bx, 10
 scoreParsing:
     xor dx, dx 
-    div bx  ;в dx остается последняя цифра
+    div bx  ;Гў dx Г®Г±ГІГ ГҐГІГ±Гї ГЇГ®Г±Г«ГҐГ¤Г­ГїГї Г¶ГЁГґГ°Г 
     push dx
     inc cx
     test ax, ax
-    jnz scoreParsing ;повторяем, пока в частном(ax) не будет 0
+    jnz scoreParsing ;ГЇГ®ГўГІГ®Г°ГїГҐГ¬, ГЇГ®ГЄГ  Гў Г·Г Г±ГІГ­Г®Г¬(ax) Г­ГҐ ГЎГіГ¤ГҐГІ 0
     
     mov bx, si
 printNumberFromStack:
     pop ax
-    add al, '0' ;перевести в символ
+    add al, '0' ;ГЇГҐГ°ГҐГўГҐГ±ГІГЁ Гў Г±ГЁГ¬ГўГ®Г«
     call printSymbol 
     loop printNumberFromStack
 
@@ -291,7 +291,7 @@ printBricksScipChange:
     ret
 printBricks ENDP
 ;**************************************************
-;закрашивает предыдущее положение мяча и рисует новое
+;Г§Г ГЄГ°Г ГёГЁГўГ ГҐГІ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ Г¬ГїГ·Г  ГЁ Г°ГЁГ±ГіГҐГІ Г­Г®ГўГ®ГҐ
 printBall PROC
     mov ax, ballPrevPositionY
     mov bx, 160
@@ -320,7 +320,7 @@ printBall PROC
     ret
 printBall ENDP
 ;**************************************************
-;закрашивает предыдущее положение ракетки и рисует новое
+;Г§Г ГЄГ°Г ГёГЁГўГ ГҐГІ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ Г°Г ГЄГҐГІГЄГЁ ГЁ Г°ГЁГ±ГіГҐГІ Г­Г®ГўГ®ГҐ
 printPaddle PROC
     mov di, 3522 
     mov ax, paddlePrevPosition
@@ -352,7 +352,7 @@ printPaddle ENDP
 ;-> 4Dh
 ;Enter 1Ch
 ;Esc 01h 
-;перемещение ракетки до старта шара
+;ГЇГҐГ°ГҐГ¬ГҐГ№ГҐГ­ГЁГҐ Г°Г ГЄГҐГІГЄГЁ Г¤Г® Г±ГІГ Г°ГІГ  ГёГ Г°Г 
 startPaddle PROC
 startPaddleLoop:
     mov ah, 01h
@@ -399,9 +399,9 @@ startEnterPressed:
     ret
 startPaddle ENDP
 ;************************************************** 
-;Возвращаемые значения:
-;ax = 00h все хорошо
-;ax = 01h проигрыш
+;Г‚Г®Г§ГўГ°Г Г№Г ГҐГ¬Г»ГҐ Г§Г­Г Г·ГҐГ­ГЁГї:
+;ax = 00h ГўГ±ГҐ ГµГ®Г°Г®ГёГ®
+;ax = 01h ГЇГ°Г®ГЁГЈГ°Г»Гё
 moveBall PROC
     mov ax, ballPositionY
     mov ballPrevPositionY, ax
@@ -433,7 +433,7 @@ tryMoveDown:
     inc ax
     cmp ax, 24 
     jb moveDown
-    ;проигрыш
+    ;ГЇГ°Г®ГЁГЈГ°Г»Гё
     mov ax, 01h
     ret
 moveDown:
@@ -610,12 +610,12 @@ move:
     ret
 moveBall ENDP
 ;**************************************************  
-;Входные параметры:
+;Г‚ГµГ®Г¤Г­Г»ГҐ ГЇГ Г°Г Г¬ГҐГІГ°Г»:
 ;ax - ballPositionY
 ;bx - ballPositionX
-;Выходные параметры:
-;dx = 0 - не было столкновения
-;dx = 1 - было столкновение 
+;Г‚Г»ГµГ®Г¤Г­Г»ГҐ ГЇГ Г°Г Г¬ГҐГІГ°Г»:
+;dx = 0 - Г­ГҐ ГЎГ»Г«Г® Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГї
+;dx = 1 - ГЎГ»Г«Г® Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ 
 checkBrickHit PROC
     cmp ax, 21
     jb abovePaddle
@@ -658,8 +658,8 @@ brickFound:
     ret
 checkBrickHit ENDP
 ;**************************************************
-;ax = 1 - проигрыш
-;ax = 2 - победа
+;ax = 1 - ГЇГ°Г®ГЁГЈГ°Г»Гё
+;ax = 2 - ГЇГ®ГЎГҐГ¤Г 
 printEndMessages PROC
     xor dx, dx
     mov bx, score
