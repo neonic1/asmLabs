@@ -148,6 +148,9 @@ waitEnter:
     jmp waitEnter
       
 exitGame:
+    mov ah, 00
+    mov al, 03
+    int 10h
     mov ah, 4Ch
     int 21h
 ;******************PROCEDURES**********************
