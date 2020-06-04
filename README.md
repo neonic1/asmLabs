@@ -1,3 +1,3 @@
 # asmLabs
-Arkanoid
+Arkanoid.
 The game!
